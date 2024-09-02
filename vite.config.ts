@@ -8,11 +8,6 @@ const root = import.meta.dirname
 const src = asPath(root, 'src')
 
 export default defineConfig({
-    resolve: {
-        alias: {
-            '/main.js': asPath(src, './pdfkit.js'),
-        }
-    },
     define: { __server_url: JSON.stringify('http://localhost:2999') },
     root: src,
     build: {

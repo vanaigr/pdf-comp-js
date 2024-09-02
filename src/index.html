@@ -11,10 +11,18 @@ html {
 }
 body {
     flex-grow: 1;
+    display: flex;
+    justify-content: stretch;
+    gap: 1em;
+}
+div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
 }
 iframe {
-    width: 30rem;
-    height: 100%;
+    flex-grow: 1;
 }
         </style>
         <script src="./main.js" type="module"></script>
