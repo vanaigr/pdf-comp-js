@@ -19,6 +19,10 @@ app.get('/pdfkit-doc.pdf', (q, s) => {
         console.log('pdfkit took', end - start)
     })
 
+    // for tebles:
+    // https://github.com/natancabral/pdfkit-table
+    // but the code is bad, so no
+
     doc.text('document', { align: 'center' })
 
     doc.end()
