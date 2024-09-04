@@ -14,6 +14,9 @@ importers:
       jspdf:
         specifier: ^2.5.1
         version: 2.5.1
+      jspdf-autotable:
+        specifier: ^3.8.3
+        version: 3.8.3(jspdf@2.5.1)
       pdfkit:
         specifier: ^0.15.0
         version: 0.15.0
@@ -553,6 +556,11 @@ packages:
 
   jpeg-exif@1.1.4:
     resolution: {integrity: sha512-a+bKEcCjtuW5WTdgeXFzswSrdqi0jk4XlEtZlx5A94wCoBpFjfFTbo/Tra5SpNCl/YFZPvcV1dJc+TAYeg6ROQ==}
+
+  jspdf-autotable@3.8.3:
+    resolution: {integrity: sha512-PQFdljBt+ijm6ZWXYxhZ54A/awV63UKcipYoA2+YGsz0BXXiXTIL/FIg+V30j7wPdSdzClfbB3qKX9UeuFylPQ==}
+    peerDependencies:
+      jspdf: ^2.5.1
 
   jspdf@2.5.1:
     resolution: {integrity: sha512-hXObxz7ZqoyhxET78+XR34Xu2qFGrJJ2I2bE5w4SM8eFaFEkW2xcGRVUss360fYelwRSid/jT078kbNvmoW0QA==}
@@ -1336,6 +1344,10 @@ snapshots:
   isarray@2.0.5: {}
 
   jpeg-exif@1.1.4: {}
+
+  jspdf-autotable@3.8.3(jspdf@2.5.1):
+    dependencies:
+      jspdf: 2.5.1
 
   jspdf@2.5.1:
     dependencies:
