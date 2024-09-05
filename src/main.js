@@ -19,114 +19,40 @@ function addPdf() {
     doc.setFontSize(8)
     doc.setLineHeightFactor(1)
 
-
-    // https://artskydj.github.io/jsPDF/docs/module-split_text_to_size.html#~splitTextToSize
-    // Undocumented options. lineHeightFactor doesn't work
-
-    doc.setDrawColor(255, 0, 0)
-
-    const margin = inchToPx * 0.5;
-    const rectWidth = w - 2*margin
-    const maxWidth = (rectWidth) / 3
-    const text = ('Document').repeat(33)
-
-
-
-    doc.text('vertical align: top', margin + maxWidth * 0.5, 10, { align: 'center' })
-    doc.text('vertical align: baseline', margin + maxWidth + maxWidth * 0.5, 10, { align: 'center' })
-    doc.text('vertical align: bottom', margin + maxWidth * 2 + maxWidth * 0.5, 10, { align: 'center' })
-
-    var hght;
-    {
-        const dim = doc.getTextDimensions(text, { maxWidth: maxWidth })
-        hght = 20 + dim.h
-
-        doc.rect(w * 0.5 - rectWidth * 0.5, 20, rectWidth, dim.h)
-
-        doc.text(
-            text,
-            margin + maxWidth * 0.5, 20,
-            {
-                align: 'center',
-                baseline: 'top',
-                maxWidth: maxWidth,
-            }
-        )
-
-        doc.text(
-            text,
-            margin + maxWidth + maxWidth * 0.5, 20,
-            {
-                align: 'center',
-                baseline: 'baseline',
-                maxWidth: maxWidth,
-            }
-        )
-
-        doc.text(
-            text,
-            margin + maxWidth * 2 + maxWidth * 0.5, 20,
-            {
-                align: 'center',
-                baseline: 'bottom',
-                maxWidth: maxWidth,
-            }
-        )
+    var finalY = 10
+    for(let i = 0; i < 10; i++) {
+        if(i != 0) doc.addPage()
+        autoTable(doc, {
+            startY: finalY,
+            head: [['Name', 'Name2', 'Name3', 'Name4', 'Name5']],
+            body: [
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3\nTest3\nTest3\nTest3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', ('Test2').repeat(5), 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+                ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
+            ],
+            margin: { left: inchToPx, right: inchToPx },
+            styles: { valign: 'middle', halign: 'center', fontSize: 20 },
+        })
     }
-
-    {
-        hght += 20
-        doc.setLineHeightFactor(3)
-
-        const dim = doc.getTextDimensions(text, { maxWidth: maxWidth })
-        const y = hght
-        hght += dim.h
-
-        doc.rect(w * 0.5 - rectWidth * 0.5, y, rectWidth, dim.h)
-
-        doc.text(
-            text,
-            margin + maxWidth * 0.5, y,
-            {
-                align: 'center',
-                baseline: 'top',
-                maxWidth: maxWidth,
-            }
-        )
-
-        doc.text(
-            text,
-            margin + maxWidth + maxWidth * 0.5, y,
-            {
-                align: 'center',
-                baseline: 'baseline',
-                maxWidth: maxWidth,
-            }
-        )
-
-        doc.text(
-            text,
-            margin + maxWidth * 2 + maxWidth * 0.5, y,
-            {
-                align: 'center',
-                baseline: 'bottom',
-                maxWidth: maxWidth,
-            }
-        )
-    }
-
-
-    doc.setFontSize(32)
-
-    autoTable(doc, {
-        startY: hght + 10,
-        head: [['Name', 'Name2']],
-        body: [
-            ['Test', 'Test2'],
-            ['Test3', 'Test4'],
-        ],
-        margin: { left: 5 * inchToPx, right: inchToPx },
-    })
 
     const docB = doc.output('blob')
     const end = performance.now()
