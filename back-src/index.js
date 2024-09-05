@@ -1,5 +1,33 @@
 import express from 'express'
-import PDFDocument from 'pdfkit-table'
+import PdfPrinter from 'pdfmake'
+
+var fonts = {
+  Courier: {
+    normal: 'Courier',
+    bold: 'Courier-Bold',
+    italics: 'Courier-Oblique',
+    bolditalics: 'Courier-BoldOblique'
+  },
+  Helvetica: {
+    normal: 'Helvetica',
+    bold: 'Helvetica-Bold',
+    italics: 'Helvetica-Oblique',
+    bolditalics: 'Helvetica-BoldOblique'
+  },
+  Times: {
+    normal: 'Times-Roman',
+    bold: 'Times-Bold',
+    italics: 'Times-Italic',
+    bolditalics: 'Times-BoldItalic'
+  },
+  Symbol: {
+    normal: 'Symbol'
+  },
+  ZapfDingbats: {
+    normal: 'ZapfDingbats'
+  }
+};
+var printer = new PdfPrinter(fonts)
 
 const app = express()
 
@@ -10,19 +38,24 @@ app.get('/pdfkit-doc.pdf', (q, s) => {
     const w = 850, h = 1100
 
     const start = performance.now()
-    const doc = new PDFDocument({ size: [w, h] })
-    // doesn't affect perf it seems
-    // const stream = doc.pipe(s)
-    // stream.on('finish', () => { s.end() })
-    doc.text('document', { align: 'center' })
 
-    ;(async() => {
-        for(let i = 0; i < 10; i++) {
-            if(i != 0) doc.addPage()
-            // note: no alignment
-            await doc.table({
-                headers: ['Name', 'Name2', 'Name3', 'Name4', 'Name5'],
-                rows: [
+    const content = []
+    const styles = {
+        myTable: {
+            font: 'Helvetica',
+        },
+    }
+
+    // add tables
+    for(let i = 0; i < 10; i++) {
+        content.push({
+            style: 'myTable',
+            table: {
+                headerRows: 1,
+                widths: ['*', '*', '*', '*', '*'],
+                body: [
+                    ['Name', 'Name2', 'Name3', 'Name4', 'Name5'],
+
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
@@ -45,13 +78,16 @@ app.get('/pdfkit-doc.pdf', (q, s) => {
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
                     ['Test', 'Test2', 'Test3', 'Test4', 'Test5'],
-                ],
-            })
-        }
-        const end = performance.now()
-        console.log('pdfkit took', end - start)
-        doc.end()
-    })()
+                ]
+            },
+        })
+    }
+
+    const doc = printer.createPdfKitDocument({ content, styles })
+    doc.pipe(s)
+    doc.end()
+    const end = performance.now()
+    console.log(end - start)
 })
 app.listen(2999, () => {
     console.log('listening...')
