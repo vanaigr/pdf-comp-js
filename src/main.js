@@ -11,17 +11,17 @@ const logoLoadedP = new Promise((s, j) => {
 })
 
 async function renderDoc() {
-    const doc = new jsPDF({ unit: 'mm' })
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' })
 
     const colorHighest = [20, 40, 60, 80]
     const colors = ['f01010', 'efb010', 'b0ef10', '40ef10', '10f010']
 
     const head = [
-        { content: '' + srcData.head[0], styles: { halign: 'center' } },
-        srcData.head[1],
-        srcData.head[2],
-        srcData.head[3],
-        srcData.head[4],
+        { content: '' + srcData.head[0], styles: { textColor: 'fefefe', halign: 'center' } },
+        { content: '' + srcData.head[1], styles: { textColor: 'fefefe' } },
+        { content: '' + srcData.head[2], styles: { textColor: 'fefefe' } },
+        { content: '' + srcData.head[3], styles: { textColor: 'fefefe' } },
+        { content: '' + srcData.head[4], styles: { textColor: 'fefefe' } },
     ]
 
     const body = []
@@ -55,6 +55,8 @@ async function renderDoc() {
     console.log(width)
 
     const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.`
+    doc.setLineHeightFactor(1.15)
+    doc.setFontSize(16)
     const lines = doc.splitTextToSize(text, width - 2*margin)
     var fs = doc.getFontSize() * ptToMm, lhf = doc.getLineHeightFactor()
     const linesHeight = lines.length == 0 ? 0 : fs + (lines.length-1)*fs*lhf
@@ -74,7 +76,8 @@ async function renderDoc() {
         styles: {
             lineColor: 80,
             lineWidth: 0.1,
-            cellPadding: 1.9
+            cellPadding: 1.9,
+            textColor: '101010'
         }
     })
 
@@ -106,3 +109,10 @@ async function renderDoc() {
 }
 
 renderDoc()
+
+const div = document.createElement('div')
+const iframe = document.createElement('iframe')
+iframe.src = new URL('pdfmake-doc.pdf', __server_url)
+div.appendChild(document.createTextNode('pdfmake'))
+div.appendChild(iframe)
+document.body.appendChild(div)
