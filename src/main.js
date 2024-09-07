@@ -77,7 +77,8 @@ async function renderDoc() {
             lineColor: 80,
             lineWidth: 0.1,
             cellPadding: 1.9,
-            textColor: '101010'
+            textColor: '101010',
+            fontSize: 10,
         }
     })
 
@@ -110,9 +111,11 @@ async function renderDoc() {
 
 renderDoc()
 
-const div = document.createElement('div')
-const iframe = document.createElement('iframe')
-iframe.src = new URL('pdfmake-doc.pdf', __server_url)
-div.appendChild(document.createTextNode('pdfmake'))
-div.appendChild(iframe)
-document.body.appendChild(div)
+{
+    const div = document.createElement('div')
+    const iframe = document.createElement('iframe')
+    iframe.src = new URL('puppeteer-doc.pdf', __server_url)
+    div.appendChild(document.createTextNode('puppeteer'))
+    div.appendChild(iframe)
+    document.body.appendChild(div)
+}

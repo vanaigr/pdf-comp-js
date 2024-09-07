@@ -8,11 +8,13 @@
     },
     "dependencies": {
         "express": "^4.19.2",
+        "jsdom": "^25.0.0",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.8.3",
         "pdfkit": "^0.15.0",
         "pdfkit-table": "^0.1.99",
         "pdfmake": "^0.2.12",
+        "puppeteer": "^23.3.0",
         "vite": "^5.4.2"
     }
 }
